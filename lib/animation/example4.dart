@@ -48,9 +48,12 @@ class _Example4State extends State<Example4> {
                   ),
                 );
               },
-              leading: Text(
-                person.emoji,
-                style: const TextStyle(fontSize: 40),
+              leading: Hero(
+                tag: person.name,
+                child: Text(
+                  person.emoji,
+                  style: const TextStyle(fontSize: 40),
+                ),
               ),
               title: Text(person.name),
               subtitle: Text('${person.age} years old'),
@@ -69,18 +72,54 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          person.emoji,
-          style: const TextStyle(fontSize: 40),
+        title: Hero(
+          flightShuttleBuilder: (flightContext, animation, flightDirection,
+              fromHeroContext, toHeroContext) {
+            switch (flightDirection) {
+              case HeroFlightDirection.push:
+                return Material(
+                  color: Colors.transparent,
+                  child: ScaleTransition(
+                      scale: animation.drive(
+                        Tween<double>(
+                          begin: 0.0,
+                          end: 1.0,
+                        ).chain(
+                          CurveTween(
+                            curve: Curves.fastOutSlowIn,
+                          ),
+                        ),
+                      ),
+                      child: toHeroContext.widget),
+                );
+              case HeroFlightDirection.pop:
+                return Material(
+                  color: Colors.transparent,
+                  child: fromHeroContext.widget,
+                );
+            }
+          },
+          tag: person.name,
+          child: Material(
+            color: Colors.transparent,
+            child: Text(
+              person.emoji,
+              style: const TextStyle(fontSize: 50),
+            ),
+          ),
         ),
         centerTitle: true,
       ),
       body: Center(
         child: Column(
           children: [
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Text(person.name),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Text('${person.age} years old'),
           ],
         ),
