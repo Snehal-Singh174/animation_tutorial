@@ -1,6 +1,7 @@
 import 'package:animation/animation/example1.dart';
 import 'package:animation/animation/example3.dart';
 import 'package:animation/animation/example4.dart';
+import 'package:animation/animation/example5.dart';
 import 'package:flutter/material.dart';
 
 import 'animation/example2.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(brightness: Brightness.dark),
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.dark,
-      home: const Example4(),
+      home: const Example5(),
     );
   }
 }
